@@ -5,20 +5,16 @@ import cors from "cors";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
-const {
-    DB_USER,
-    DB_HOST,
-    DB_NAME,
-    DB_PASSWORD,
-    DB_PORT
-}=process.env;
+// const {
+//     DB_USER,
+//     DB_HOST,
+//     DB_NAME,
+//     DB_PASSWORD,
+//     DB_PORT
+// }=process.env;
 
 const pool = new Pool({
-    user: DB_USER,
-    host: DB_HOST,
-    database: DB_NAME,
-    password: DB_PASSWORD,
-    port: DB_PORT
+    connectionString: process.env.DATABASE_URL
 });
 
 const app = express();
