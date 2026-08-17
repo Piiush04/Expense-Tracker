@@ -3,7 +3,7 @@ import { addExpense, getExpenses, deleteExpense } from "./services/expenseServic
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import "./App.css";
-import { login } from "./services/authService";
+// import { login } from "./services/authService";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -22,23 +22,33 @@ function App() {
     }
   },[]);
 
-  useEffect(()=>{
-    if(token){
-      fetchExpenses();
+useEffect(()=>{
+  const fetchExpenses = async () => {
+    try {
+      const response = await getExpenses(token);
+      setExpense(response);
+      console.log("Fetched expenses successfully");
+    } catch (error) {
+      console.log("Can't fetch expenses");
     }
-  },[token]);
+  };
+  
+  if(token){
+    fetchExpenses();
+  }
+},[token]);
 
   
 
-    const fetchExpenses = async () => {
-      try {
-        const response = await getExpenses(token);
-        setExpense(response);
-        console.log("Fetched expenses successfully");
-      } catch (error) {
-        console.log("Can't fetch responses");
-      }
-    };
+    // const fetchExpenses = async () => {
+    //   try {
+    //     const response = await getExpenses(token);
+    //     setExpense(response);
+    //     console.log("Fetched expenses successfully");
+    //   } catch (error) {
+    //     console.log("Can't fetch responses");
+    //   }
+    // };
   
   const handleLoginSuccess = (newToken)=>{
     setToken(newToken);
