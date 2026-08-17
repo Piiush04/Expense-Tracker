@@ -1,31 +1,39 @@
 const API_URL = "http://localhost:5000";
 
-export const addExpense = async(title, amount, category, expenseDate) => {
+export const addExpense = async(title, amount, category, expenseDate, token) => {
     try {
         const response = await fetch(API_URL+"/expenses",{
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 title: title,
                 amount: amount,
                 category: category,
                 expenseDate: expenseDate,
-                userId: 1
+                
             })
         });
         const data = await response.json();
-        console.log(data);
+        if(!response.ok){
+            throw new Error(data.error || "Failed to add expense");
+        }
         return data;
     } catch (error) {
         console.error("Error adding expense : ",error);
+        throw error;
     }
 };
 
-export const getExpenses = async()=>{
+export const getExpenses = async(token)=>{
     try {
-        const response = await fetch(API_URL+"/expenses");
+        const response = await fetch(API_URL+"/expenses",{
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
         const data = await response.json();
         console.log(data);
         return data;
@@ -34,10 +42,14 @@ export const getExpenses = async()=>{
     }
 };
 
-export const deleteExpense = async(id)=>{
+export const deleteExpense = async(id,token)=>{
     try {
         const response = await fetch(API_URL+`/expenses/${id}`,{
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+
         });
 
         const data = await response.json();
