@@ -3,7 +3,7 @@ import { addExpense, getExpenses, deleteExpense } from "./services/expenseServic
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import "./App.css";
-import { login } from "./services/authService";
+// import { login } from "./services/authService";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -26,7 +26,7 @@ function App() {
     if(token){
       fetchExpenses();
     }
-  },[token]);
+  },[token,fetchExpenses]);
 
   
 
