@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000";
+const API_URL = "https://expense-tracker-ayup.onrender.com";
 
 export const addExpense = async(title, amount, category, expenseDate, token) => {
     try {
